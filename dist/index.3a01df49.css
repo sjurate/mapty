@@ -170,13 +170,14 @@ a:link, a:visited {
   font-size: 1.3rem;
 }
 
-.twitter-link:link, .twitter-link:visited {
-  color: var(--color-light--1);
-  transition: all .2s;
-}
-
-.twitter-link:hover, .twitter-link:active {
-  color: var(--color-light--2);
+.reset__btn {
+  background-color: var(--color-light--2);
+  color: var(--color-dark--2);
+  float: right;
+  cursor: pointer;
+  padding: .2rem;
+  font-size: 1.2rem;
+  display: none;
 }
 
 #map {

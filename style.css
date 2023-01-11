@@ -178,15 +178,14 @@ a:visited {
   color: var(--color-light--1);
 }
 
-.twitter-link:link,
-.twitter-link:visited {
-  color: var(--color-light--1);
-  transition: all 0.2s;
-}
-
-.twitter-link:hover,
-.twitter-link:active {
-  color: var(--color-light--2);
+.reset__btn {
+  background-color: var(--color-light--2);
+  color: var(--color-dark--2);
+  padding: 0.2rem;
+  font-size: 1.2rem;
+  float: right;
+  cursor: pointer;
+  display: none;
 }
 
 /* MAP */

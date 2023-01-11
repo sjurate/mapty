@@ -605,6 +605,7 @@ const inputDistance = document.querySelector(".form__input--distance");
 const inputDuration = document.querySelector(".form__input--duration");
 const inputCadence = document.querySelector(".form__input--cadence");
 const inputElevation = document.querySelector(".form__input--elevation");
+const resetBtn = document.querySelector(".reset__btn");
 ///////////////////////////////////////////////////////
 // APPLICATION ARCHITECTURE ----------------------
 class App {
@@ -621,6 +622,7 @@ class App {
         // Changing form's input field depending on type of workout
         inputType.addEventListener("change", this._toggleElevationField.bind(this));
         containerWorkouts.addEventListener("click", this._moveToPopup.bind(this));
+        resetBtn.addEventListener("click", this.reset);
     }
     _getPosition() {
         // Geolocation API
@@ -759,8 +761,9 @@ class App {
         <span class="workout__value">${workout.cadence}</span>
         <span class="workout__unit">m</span>
     </div>
-    <button class="workout_delete">❌</button>
-  </li>`;
+    
+  </li>
+  `;
         if (workout.type === "cycling") html += `
       <div class="workout__details">
         <span class="workout__icon">⚡️</span>
@@ -772,20 +775,18 @@ class App {
         <span class="workout__value">${workout.elevationGain}</span>
         <span class="workout__unit">spm</span>
       </div>
-      <button class="delete">❌</button>
+     
     </li>`;
         form.insertAdjacentHTML("afterend", html);
-        const deleteBtns = document.querySelectorAll(".delete");
-        deleteBtns.forEach((btn)=>btn.addEventListener("click", this._deleteWorkout.bind(this)));
-        console.log(deleteBtns);
+        resetBtn.style.display = "block";
     }
     _moveToPopup(e) {
         const workoutEl = e.target.closest(".workout");
         if (!workoutEl) return;
-        const workout = this.#workouts.find((w)=>w.id === workoutEl.dataset.id);
+        const workout = this.#workouts?.find((w)=>w.id === workoutEl.dataset.id);
         // move the map to workout place
         // setView() needs 2 arguments: 1st - coords where to move, 2nd - zoom level. 3rd is optional - object with options
-        this.#map.setView(workout.coords, this.#mapZoom, {
+        this.#map?.setView(workout.coords, this.#mapZoom, {
             animate: true,
             pan: {
                 duration: 1
@@ -801,17 +802,7 @@ class App {
         const data = JSON.parse(localStorage.getItem("workouts"));
         if (!data) return;
         this.#workouts = data;
-        this.#workouts.forEach((w)=>this._renderWorkout(w));
-    }
-    _deleteWorkout(e) {
-        const workoutEl = e.target.closest(".workout");
-        console.log(workoutEl);
-        const index = this.#workouts.findIndex((w)=>w.id === workoutEl.dataset.id);
-        console.log(index);
-        this.#workouts = this.#workouts.splice(index, 1);
-        console.log(this.#workouts);
-        this._setLocalStorage();
-        this._getLocalStorage();
+        this.#workouts?.forEach((w)=>this._renderWorkout(w));
     }
     reset() {
         localStorage.removeItem("workouts");
